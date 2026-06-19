@@ -1,4 +1,4 @@
-# Insurance Underwriting Portfolio Analysis
+# Insurance Underwriting Portfolio Analysis niggggerrrrrrrrrrrrrr
 
 ## Project Overview
 
@@ -42,6 +42,10 @@ The project consists of four relational tables:
 Brokers → Submissions
 
 Applicants → Submissions → Policies
+
+## Entity Relationship Diagram
+
+![ERD Diagram](images/erd.png)
 
 ---
 
