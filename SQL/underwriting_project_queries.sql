@@ -5,16 +5,7 @@ INSURANCE UNDERWRITING SQL PROJECT
 Database: underwriting_project
 Tools: PostgreSQL, pgAdmin, Excel, VS Code
 
-Description:
-Simulated an insurance underwriting system including:
-- brokers
-- applicants
-- submissions
-- policies
 
-Goal:
-To Analyze underwriting performance, broker productivity,
-and portfolio risk exposure.
 
 
 
@@ -24,7 +15,7 @@ and portfolio risk exposure.
 
 
 
-SECTION 1 - PORTFOLIO SUMMARY 
+QUERY 1 - PORTFOLIO SUMMARY 
 
 Purpose:
 Provide a brief summary of the underwriting portfolio's premiums. 
@@ -46,7 +37,7 @@ SELECT
     MAX(premium) AS highest_premium
 FROM policies;
 /*---------------------------------------------------
-Results:
+Output:
 
 - Total Policies: 83
 - Total Written Premium: $156,963,409.00
@@ -68,7 +59,7 @@ $9,825 to $3,850,666, indicating a mix of small and large accounts.
 
 
 
-SECTION 2 - POLICY PREMIUM DISTRIBUTION
+QUERY 2 - POLICY PREMIUM DISTRIBUTION
 
 Purpose:
 Analyze the distribution of policies across premium ranges
@@ -114,13 +105,13 @@ ORDER BY
         ELSE 5 
     END);
 /*---------------------------------------------------
-Results:
+Output:
 
-"premium_amount_range"  "number_of_policies"    "percentage_of_portfolio"
-"Small (< $0.5M)"   16  19.28
-"Medium ($0.5 M - $2.5M)"   36  43.37
-"Large ($2.5 M - $3.5M)"    21  25.30
-"Very Large (> $3.5M)"  10  12.05
+premium_amount_range - number_of_policies -   percentage_of_portfolio
+Small (< $0.5M)                16                     19.28
+Medium ($0.5 M - $2.5M)        36                     43.37
+Large ($2.5 M - $3.5M)         21                     25.30
+Very Large (> $3.5M)           10                     12.05
 
 Insight:
 
@@ -147,7 +138,7 @@ either very small or very large risks.
 
 
 
-SECTION 3 - PORTFOLIO TOTAL PREMIUM BY PROVINCE
+QUERY 3 - PORTFOLIO TOTAL PREMIUM BY PROVINCE
 
 Purpose:
 Measure geographic concentration of business and identify
@@ -173,13 +164,14 @@ LEFT JOIN applicants AS a ON s.applicant_id = a.applicant_id
 GROUP BY a.province
 ORDER BY Total_Premium DESC;
 /*---------------------------------------------------
-Results:
+Output:
 
-- Manitoba: $54,736,895.00 - 34.87% of 
-- Ontario: $28,904,576.00 - 18.41%
-- Saskatchewan: $26,038,904.00 - 16.59%
-- Alberta: $24,333,235.00 - 15.50% 
-- British Columbia: $22,949,799.00 - 14.62%
+province ------ total_premium - percent_of_total_premium
+Manitoba	       54736895	            34.87
+Ontario	           28904576	            18.41
+Saskatchewan       26038904          	16.59
+Alberta	           24333235	            15.50
+British Columbia   22949799	            14.62
 
 Insight:
 
@@ -193,7 +185,7 @@ British Columbia generated the lowest (14.62% of all premium).
 
 
 
-SECTION 4 - TOP 10 ACCOUNTS (COMPANIES) BY PREMIUM
+QUERY 4 - TOP 10 ACCOUNTS (COMPANIES) BY PREMIUM
 
 Purpose:
 Identify the 10 largest accounts (companies) in the 
@@ -221,19 +213,19 @@ GROUP BY company_name
 ORDER BY total_premium DESC
 LIMIT 10;
 /*---------------------------------------------------
-Results:
+Output:
 
-"company_name"	"total_premium"	"percent_of_total_portfolio_premium"
-"ClearPath Manufacturing"	9526644	6.07
-"TrueNorth Retail Systems"	8969075	5.71
-"CopperStone Manufacturing"	8350869	5.32
-"PrairieSky Logistics Inc"	7912156	5.04
-"UrbanGrid Retail Solutions"	6034534	3.84
-"Golden Prairie Foods"	4611238	2.94
-"West Coast Freight Services"	4554446	2.90
-"StoneRiver Engineering Co"	4466494	2.85
-"MapleForge Engineering Ltd"	4345071	2.77
-"Northern Crest Retailers"	3850666	2.45
+company_name ------------------- total_premium - percent_of_total_portfolio_premium
+"ClearPath Manufacturing"	      9526644	                6.07
+"TrueNorth Retail Systems"	      8969075               	5.71
+"CopperStone Manufacturing"	      8350869	                5.32
+"PrairieSky Logistics Inc"	      7912156               	5.04
+"UrbanGrid Retail Solutions"	  6034534               	3.84
+"Golden Prairie Foods"	          4611238	                2.94
+"West Coast Freight Services"	  4554446	                2.90
+"StoneRiver Engineering Co"	      4466494	                2.85
+"MapleForge Engineering Ltd"	  4345071	                2.77
+"Northern Crest Retailers"	      3850666               	2.45
 
 Insight:
 
@@ -253,7 +245,7 @@ protected from the loss/reduction of some of the largest accounts.
 
 
 
-SECTION 5 - PORTFOLIO COMPOSITION BY INDUSTRY
+QUERY 5 - PORTFOLIO COMPOSITION BY INDUSTRY
 
 Purpose:
 Analyze industry concentration and identify which
@@ -283,16 +275,16 @@ LEFT JOIN applicants AS a ON s.applicant_id = a.applicant_id
 GROUP BY a.industry
 ORDER BY total_premium DESC;
 /*---------------------------------------------------
-Results:
+Output:
 
-"industry"	"number_of_policies"	"average_premium"	"total_premium"	"percent_of_total_premium"
-"Manufacturing"	28	1827278.61	51163801	32.60
-"Transportation"	14	2478203.50	34694849	22.10
-"Construction"	17	1756168.65	29854867	19.02
-"Retail"	13	1673600.46	21756806	13.86
-"Restaurant"	4	2008470.75	8033883	5.12
-"Technology"	3	2341568.67	7024706	4.48
-"Warehousing"	4	1108624.25	4434497	2.83
+industry---------- number_of_policies - average_premium	- total_premium - percent_of_total_premium
+Manufacturing"	          28	           1827278.61	     51163801	          32.60
+Transportation"	          14	           2478203.50	     34694849	          22.10
+Construction"	          17	           1756168.65        29854867	          19.02
+Retail"	                  13	           1673600.46	     21756806	          13.86
+Restaurant"                4	           2008470.75	      8033883              5.12
+Technology"	               3	           2341568.67	      7024706	           4.48
+Warehousing"	           4	           1108624.25	      4434497	           2.83
 
 Insight:
 
@@ -313,7 +305,7 @@ despite a lower policy count than some other industries.
 
 
 
-SECTION 6 - BIND (APPROVAL) RATE BY INDUSTRY
+QUERY 6 - BIND (APPROVAL) RATE BY INDUSTRY
 
 Purpose:
 Measure underwriting selectivity across different industries
@@ -350,16 +342,16 @@ FULL JOIN bind_table
 	ON subm_table.industry = bind_table.industry
 ORDER BY bind_rate_percent DESC;
 /*---------------------------------------------------
-Results:
+Output:
 
-"industry"	"number_of_submissions"	"number_of_bound_policies"	"bind_rate_percent"
-"Manufacturing"	46	28	60.87
-"Construction"	30	17	56.67
-"Transportation"	22	14	63.64
-"Retail"	23	13	56.52
-"Warehousing"	8	4	50.00
-"Restaurant"	10	4	40.00
-"Technology"	11	3	27.27
+industry -------- number_of_submissions - number_of_bound_policies - bind_rate_percent
+Manufacturing	          46	                 28	                      60.87
+Construction	          30	                 17	                      56.67
+Transportation	          22	                 14	                      63.64
+Retail	                  23	                 13	                      56.52
+Warehousing	               8	                  4	                      50.00
+Restaurant	              10	                  4	                      40.00
+Technology	              11	                  3	                      27.27
 
 Insight:
 
@@ -387,7 +379,7 @@ and adjust pricing or acceptance criteria by industry.
 
 
 
-SECTION 7 - BROKER SUBMISSION VOLUME
+QUERY 7 - BROKER SUBMISSION VOLUME
 
 Purpose:
 Measure the volume of all submissions generated by each 
@@ -408,19 +400,19 @@ LEFT JOIN brokers AS b
 GROUP BY b.broker_name
 ORDER BY number_of_submissions DESC;
 /*---------------------------------------------------
-Results:
+Output:
 
-"broker_name"	"number_of_submissions"
-"TrueNorth Risk Partners"	19
-"Alberta Commercial Brokerage Group"	17
-"Clearwater Insurance Advisors"	17
-"SummitStone Insurance Brokers"	17
-"Prairie Risk Solutions"	16
-"IronGate Risk Management Brokers"	16
-"Northbridge Advisory Group"	14
-"Maple Leaf Commercial Brokers"	13
-"Horizon Edge Insurance Services"	11
-"Western Shield Insurance Brokers"	10
+broker_name ------------------------ number_of_submissions
+TrueNorth Risk Partners	                       19
+Alberta Commercial Brokerage Group	           17
+Clearwater Insurance Advisors	               17
+SummitStone Insurance Brokers	               17
+Prairie Risk Solutions	                       16
+IronGate Risk Management Brokers	           16
+Northbridge Advisory Group	                   14
+Maple Leaf Commercial Brokers	               13
+Horizon Edge Insurance Services	               11
+Western Shield Insurance Brokers	           10
 
 Insight:
 
@@ -445,7 +437,7 @@ also be monitored for submission quality in the next stage
 
 
 
-SECTION 8 - BROKER BIND (APPROVAL) RATE
+QUERY 8 - BROKER BIND (APPROVAL) RATE
 
 Purpose:
 Measure the quality of business submitted by each broker
@@ -486,19 +478,19 @@ INNER JOIN bind_table
 	ON subm_table.broker_name = bind_table.broker_name 
 ORDER BY bind_rate_percent DESC;
 /*---------------------------------------------------
-Results:
+Output:
 
-"broker_name"	"number_of_submissions"	"number_of_bound_policies"	"bind_rate_percent"
-"Northbridge Advisory Group"	14	10	71.43
-"Alberta Commercial Brokerage Group"	17	12	70.59
-"SummitStone Insurance Brokers"	17	11	64.71
-"Clearwater Insurance Advisors"	17	10	58.82
-"Prairie Risk Solutions"	16	9	56.25
-"Maple Leaf Commercial Brokers"	13	7	53.85
-"Western Shield Insurance Brokers"	10	5	50.00
-"TrueNorth Risk Partners"	19	9	47.37
-"IronGate Risk Management Brokers"	16	7	43.75
-"Horizon Edge Insurance Services"	11	3	27.27
+broker_name	------------------------- number_of_submissions - number_of_bound_policies - bind_rate_percent
+Northbridge Advisory Group	                     14	                    10	                   71.43
+Alberta Commercial Brokerage Group	             17	                    12	                   70.59
+SummitStone Insurance Brokers	                 17	                    11	                   64.71
+Clearwater Insurance Advisors	                 17	                    10	                   58.82
+Prairie Risk Solutions	                         16	                     9	                   56.25
+Maple Leaf Commercial Brokers	                 13	                     7	                   53.85
+Western Shield Insurance Brokers	             10	                     5	                   50.00
+TrueNorth Risk Partners	                         19	                     9	                   47.37
+IronGate Risk Management Brokers	             16	                     7	                   43.75
+Horizon Edge Insurance Services	                 11	                     3	                   27.27
 
 Insight:
 
@@ -528,7 +520,7 @@ those who drive profitable, bindable business.
 
 
 
-SECTION 9 - BROKER DECLINE RATE
+QUERY 9 - BROKER DECLINE RATE
 
 Purpose:
 Evaluate the quality of business submitted by each broker
@@ -565,19 +557,19 @@ FULL JOIN declined_table
 	ON total_table.broker_name = declined_table.broker_name
 	ORDER BY decline_rate DESC;
 /*---------------------------------------------------
-Results:
+Output:
 
-"broker_name"	"total_submissions"	"declined_submissions"	"decline_rate"
-"Horizon Edge Insurance Services"	11	6	54.55
-"Western Shield Insurance Brokers"	10	4	40.00
-"IronGate Risk Management Brokers"	16	6	37.50
-"TrueNorth Risk Partners"	19	7	36.84
-"Clearwater Insurance Advisors"	17	6	35.29
-"Prairie Risk Solutions"	16	5	31.25
-"Maple Leaf Commercial Brokers"	13	4	30.77
-"Northbridge Advisory Group"	14	3	21.43
-"Alberta Commercial Brokerage Group"	17	3	17.65
-"SummitStone Insurance Brokers"	17	1	5.88
+broker_name	------------------------- total_submissions - declined_submissions - decline_rate
+Horizon Edge Insurance Services	              11	              6	                 54.55
+Western Shield Insurance Brokers	          10	              4	                 40.00
+IronGate Risk Management Brokers	          16	              6	                 37.50
+TrueNorth Risk Partners	                      19                  7	                 36.84
+Clearwater Insurance Advisors	              17	              6	                 35.29
+Prairie Risk Solutions	                      16	              5	                 31.25
+Maple Leaf Commercial Brokers	              13	              4 	             30.77
+Northbridge Advisory Group	                  14	              3	                 21.43
+Alberta Commercial Brokerage Group	          17	              3	                 17.65
+SummitStone Insurance Brokers	              17	              1	                  5.88
 
 Insight:
 
@@ -598,7 +590,7 @@ disproportionate share of all declined bsubmissions
 
 
 
-SECTION 10 - SUBMISSION STATUS ANALYSIS
+QUERY 10 - SUBMISSION STATUS ANALYSIS
 
 Purpose:
 Analyze the flow of submissions through the underwriting
@@ -620,12 +612,12 @@ FROM submissions
 GROUP BY status
 ORDER BY status;
 /*---------------------------------------------------
-Results:
+Output:
 
-"status"	"submissions"	"percentage"
-"Approved"	83	55.33
-"Declined"	45	30.00
-"Pending"	22	14.67
+status ---- submissions - percentage
+Approved	    83	        55.33
+Declined	    45	        30.00
+Pending	        22	        14.67
 
 Insight:
 
