@@ -51,8 +51,8 @@ Applicants → Submissions → Policies
 
 ## How to Use This Project
 
-1. Load the four CSV files into PostgreSQL tables
-2. Open 'underwriting_project_queries.sql'
+1. Go to the 'data' folder and upload the four CSV files into PostgreSQL tables
+2. Go to the 'SQL' folder and open 'insurance_project_queries.sql'
 3. Review each query section, which includes:
   - Purpose of the query
   - Key metrics
